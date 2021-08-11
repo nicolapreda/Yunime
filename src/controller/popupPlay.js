@@ -23,7 +23,7 @@ function playExtPage() {
         }
         documentTitle.innerHTML = "Riproduci\n" + anime_title;
 
-        document.title = "Riproduci " + anime_title + " - JiyuMe";
+        document.title = "Riproduci " + anime_title + " - Yunime";
 
         //Last episode button
         var containerParent = document.getElementsByClassName("container")[1];

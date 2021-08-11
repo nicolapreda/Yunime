@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener(function(result, sender) {
 
     if (request == true) {
 
-        port = chrome.runtime.connectNative('com.diskxo.jiyume');
+        port = chrome.runtime.connectNative('com.diskxo.yunime');
 
         port.postMessage({
             animeTitle: anime_title,

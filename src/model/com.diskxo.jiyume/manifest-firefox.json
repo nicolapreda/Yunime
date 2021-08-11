@@ -1,7 +1,0 @@
-{
-    "name": "com.diskxo.jiyume",
-    "description": "Open Anime Episode in VLC Media Player",
-    "path": "index.js",
-    "type": "stdio",
-    "allowed_extensions": ["8da5c56667442440e38b31d24e8fddba45fb5048@temporary-addon"]
-}
