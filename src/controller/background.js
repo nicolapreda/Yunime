@@ -22,7 +22,7 @@ chrome.runtime.onMessage.addListener(function(result, sender) {
 
         port.postMessage({
             animeTitle: anime_title,
-            episodeNumber: episode_number,
+            episodeNumber: episode_number
         });
 
         port.onDisconnect.addListener(function(request, sender, response) {
@@ -32,10 +32,7 @@ chrome.runtime.onMessage.addListener(function(result, sender) {
 
                 });
             }
-
         });
-
-
 
     }
 });
