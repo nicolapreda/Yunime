@@ -6,5 +6,6 @@
 #token
 *.env
 
-#vscode
+#vscode & webstorm
 .vscode/
+.idea/
