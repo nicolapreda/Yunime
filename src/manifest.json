@@ -19,6 +19,7 @@
     "browser_action": {
         "default_popup": "view/play.html"
     },
+    "homepage_url": "https://nicolapreda.me/yunime",
 
     "permissions": [
         "*://anilist.co/*",
@@ -27,8 +28,8 @@
         "activeTab",
         "storage"
     ],
-
     "content_security_policy": "script-src 'self' https://apis.google.com/js/api.js 'unsafe-eval'; object-src 'self'",
+
     "web_accessible_resources": [
         "view/play.html",
         "view/index.html",

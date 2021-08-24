@@ -1,3 +1,11 @@
+'use strict'
+
+//Open NativeConnect download when extension is installed
+chrome.runtime.onInstalled.addListener(function (object) {
+    chrome.tabs.create({url: "https://nicolapreda.me/yunime/#download"});
+});
+
+
 chrome.browserAction.setPopup({ popup: "../view/index.html" });
 chrome.runtime.onMessage.addListener(function(request) {
     if (request.page == "play") {
@@ -12,26 +20,33 @@ chrome.runtime.onMessage.addListener(function(request) {
 
 chrome.runtime.onMessage.addListener(function(result, sender) {
 
-    var anime_title = result.animeTitle;
-    var episode_number = result.nEpisode;
-    var request = result.request;
+    let anime_title = result.animeTitle;
+    let episode_number = result.nEpisode;
+    let request = result.request;
 
     if (request == true) {
 
-        port = chrome.runtime.connectNative('com.diskxo.yunime');
+        this.port = chrome.runtime.connectNative('com.diskxo.yunime');
 
-        port.postMessage({
+        this.port.postMessage({
             animeTitle: anime_title,
             episodeNumber: episode_number
         });
 
-        port.onDisconnect.addListener(function(request, sender, response) {
-            if (request.errormsg == 'Anime not found 39' || request.errormsg == 'Anime not found 34') {
-                chrome.runtime.sendMessage({
-                    err: request.errormsg
+        this.port.onMessage.addListener(res => {
+                console.log(res)
+                if (res.res == 1){
+                    chrome.storage.local.set({ "response": 1 })
+                    chrome.runtime.sendMessage({
+                        reponse: 1
+                    });
+                } else if (res.res == 0){
+                    chrome.storage.local.set({ "response": 0 })
+                    chrome.runtime.sendMessage({
+                        reponse: 0
+                    });
+                }
 
-                });
-            }
         });
 
     }
