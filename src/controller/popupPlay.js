@@ -1,6 +1,11 @@
+//Sleep function
+function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+
 window.addEventListener('load', (event) => {
     playExtPage()
-
 });
 
 function playExtPage() {
@@ -70,23 +75,70 @@ function playExtPage() {
                     buttonContainer.innerHTML = ""
                     buttonContainer.style.padding = "1.7rem"
 
-                    chrome.runtime.onMessage.addListener(function(res) {
-                            chrome.storage.local.get(["response"], function(result) {
+                    buttonContainer.classList.remove("loaded");
+
+                    function CreateAlert(content){
+
+                        let divAlert = document.createElement("DIV")
+                        divAlert.className = "alert hide"
+                        let warning = document.createElement("SPAN")
+                        warning.className = "fas fa-exclamation-circle"
+                        warning.innerHTML = "⚠"
+                        divAlert.appendChild(warning)
+                        let warningContent = document.createElement("SPAN")
+                        warningContent.className = "msg"
+                        warningContent.innerHTML = content
+                        divAlert.appendChild(warningContent)
+                        let closeBtn = document.createElement("DIV")
+                        closeBtn.className = "close-btn"
+                        let spanClose = document.createElement("SPAN")
+                        spanClose.className = "fas fa-times"
+                        spanClose.innerHTML = "⭕"
+                        closeBtn.appendChild(spanClose)
+                        divAlert.appendChild(closeBtn)
+                        document.body.appendChild(divAlert)
+
+                        $('.alert').addClass("show");
+                        $('.alert').removeClass("hide");
+                        $('.alert').addClass("showAlert");
+                        setTimeout(function(){
+                            $('.alert').removeClass("show");
+                            $('.alert').addClass("hide");
+                        },5000);
+
+                        $('.close-btn').click(function(){
+                            $('.alert').removeClass("show");
+                            $('.alert').addClass("hide");
+                        });
+                    }
+
+                    chrome.runtime.onMessage.addListener(async function(res) {
+                            chrome.storage.local.get(["response"], async function(result) {
                                 let status = result.response
 
                                 if (status == 'Anime not found! (Line 39)' || status == 'Anime not found! (Line 34)') {
                                     alert("Episodio non trovato!")
                                 }
                                 if (status == 1){
+                                    await sleep(1000)
                                     buttonContainer.innerHTML = "Episodio " + numberEp
                                     buttonContainer.style.padding = "1rem"
                                     buttonContainer.style.backgroundImage = ""
+                                    buttonContainer.className = "dropdown-item loaded"
                                     chrome.storage.local.set({ "animeClicked": anime_title, "episodeClicked": numberEp, "coverClicked": cover_image })
                                 }else if (status == 0){
                                     buttonContainer.innerHTML = "Episodio " + numberEp
                                     buttonContainer.style.padding = "1rem"
                                     buttonContainer.style.backgroundImage = ""
-                                    alert("Episodio non trovato")
+                                    buttonContainer.className = "dropdown-item loaded"
+
+
+                                }else if (status == -1){
+                                    buttonContainer.innerHTML = "Episodio " + numberEp
+                                    buttonContainer.style.padding = "1rem"
+                                    buttonContainer.style.backgroundImage = ""
+                                    buttonContainer.className = "dropdown-item loaded"
+
                                 }
                             });
 

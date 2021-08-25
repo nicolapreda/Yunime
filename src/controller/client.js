@@ -8,25 +8,12 @@ $.ajax({
     processData: false,
     contentType: false,
     success: async function() {
-        onPageChange("1");
+        pageScan();
     },
 });
 
-async function onPageChange(oldPage_val) {
-    var currentPage = window.location.href;
-    if (currentPage != oldPage_val) {
-        oldPage_val = currentPage;
-        pageScan()
-        await sleep(500);
-        onPageChange(oldPage_val);
-    } else {
-        await sleep(500);
-        onPageChange(oldPage_val);
-    }
-}
-
 //Scans pages of Anilist
-function pageScan() {
+async function pageScan() {
     var tablink = window.location.href;
     var SummaryPage = tablink.includes("/anime/");
     if (SummaryPage == true) {
@@ -34,6 +21,8 @@ function pageScan() {
     } else {
         getIndexPopup()
     }
+    await sleep(500)
+    pageScan()
 }
 
 

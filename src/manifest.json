@@ -24,8 +24,6 @@
     "permissions": [
         "*://anilist.co/*",
         "nativeMessaging",
-        "tabs",
-        "activeTab",
         "storage"
     ],
     "content_security_policy": "script-src 'self' https://apis.google.com/js/api.js 'unsafe-eval'; object-src 'self'",

@@ -46,6 +46,12 @@ chrome.runtime.onMessage.addListener(function(result, sender) {
                         reponse: 0
                     });
                 }
+                else if (res.res == -1){
+                    chrome.storage.local.set({ "response": -1 })
+                    chrome.runtime.sendMessage({
+                        reponse: -1
+                    });
+                }
 
         });
 
