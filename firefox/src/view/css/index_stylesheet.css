@@ -9,10 +9,14 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d4d4d4;
+  background: #e7e7e7;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #e7e7e7;
 }
 
 body {
+
   overflow-x: hidden;
   margin: 0;
   padding: 0;
@@ -55,4 +59,14 @@ body {
   height: 200px;
   border-radius: 15px 0px 0px 15px;
 }
+
+/*Bootstrap container fixed*/
+
+.index-container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 /*# sourceMappingURL=index_stylesheet.css.map */

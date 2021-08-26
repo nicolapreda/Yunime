@@ -10,6 +10,9 @@
 ::-webkit-scrollbar-thumb {
   background: #e7e7e7;
 }
+::-webkit-scrollbar-thumb:hover {
+  background: #e7e7e7;
+}
 
 body {
   overflow-x: hidden;
@@ -160,6 +163,12 @@ body {
   color: #ce8500;
   font-size: 22px;
   line-height: 40px;
+}
+.play-container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 /*# sourceMappingURL=play_stylesheet.css.map */

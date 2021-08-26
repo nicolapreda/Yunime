@@ -26,14 +26,14 @@ browser.runtime.onMessage.addListener(function(result, sender) {
 
     if (request == true) {
 
-        this.port = browser.runtime.connectNative('com.diskxo.yunime');
+        var port = browser.runtime.connectNative('com.diskxo.yunime');
 
-        this.port.postMessage({
+        port.postMessage({
             animeTitle: anime_title,
             episodeNumber: episode_number
         });
 
-        this.port.onMessage.addListener(res => {
+        port.onMessage.addListener(res => {
                 console.log(res)
                 if (res.res == 1){
                     browser.storage.local.set({ "response": 1 })

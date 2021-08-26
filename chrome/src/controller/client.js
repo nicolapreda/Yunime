@@ -52,9 +52,13 @@ function getPlayPopup() {
     cover_image = cover_image.src
 
     if (isNaN(number_episodes)) {
-        number_episodes = document.querySelector(
-            "#app > div.page-content > div > div.content.container > div.sidebar > div.data > div.data-set.airing-countdown > div.countdown.value > span"
-        ).textContent;
+        try{
+            number_episodes = document.querySelector(
+                "#app > div.page-content > div > div.content.container > div.sidebar > div.data > div.data-set.airing-countdown > div.countdown.value > span"
+            ).textContent;
+        }catch{
+            number_episodes = document.querySelector("#app > div.page-content > div > div.content.container > div.sidebar > div.data > div:nth-child(2) > div.value").textContent
+        }
 
         number_episodes = number_episodes.replace("\t", "");
         number_episodes = number_episodes.replace(" ", "");

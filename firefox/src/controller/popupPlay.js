@@ -41,7 +41,7 @@ function playExtPage() {
 
         //Add dropdown items
         for (var x = 1; x < number_episodes; x++) {
-            var containerParent = document.getElementsByClassName("container")[1];
+            var containerParent = document.getElementsByClassName("play-container")[0];
 
             var playButton = document.createElement("A");
             playButton.className = "dropdown-item loaded";
@@ -68,7 +68,7 @@ function playExtPage() {
 
                     let buttonContainer = document.getElementById(numberEp);
                     let buttonClassName = buttonContainer.className
-                    console.log(buttonContainer)
+
                     buttonContainer.style.backgroundImage = "url('../view/assets/Spinner_Loading.svg')"
                     buttonContainer.style.backgroundSize = "50px"
                     buttonContainer.style.backgroundPosition = "center"
