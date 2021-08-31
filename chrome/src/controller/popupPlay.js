@@ -82,9 +82,7 @@ function playExtPage() {
                             chrome.storage.local.get(["response"], async function(result) {
                                 let status = result.response
                                 let isLastEpisode = buttonClassName.includes("lastepisode")
-                                if (status == 'Anime not found! (Line 39)' || status == 'Anime not found! (Line 34)') {
-                                    alert("Episodio non trovato!")
-                                }
+
                                 if (status == 1){
                                     await sleep(1000)
                                     buttonContainer.innerHTML = "Episodio " + numberEp
