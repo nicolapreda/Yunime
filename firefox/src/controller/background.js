@@ -30,7 +30,7 @@ browser.runtime.onMessage.addListener(function(result, sender) {
 
         port.postMessage({
             animeTitle: anime_title,
-            episodeNumber: episode_number
+            episodeNumber: episode_number,
         });
 
         port.onMessage.addListener(res => {

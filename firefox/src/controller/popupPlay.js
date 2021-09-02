@@ -15,8 +15,6 @@ function playExtPage() {
         var number_episodes = result.numberEpisodes;
         var background_image = result.backgroundImage;
         var cover_image = result.coverImage;
-
-
         var divParent = document.getElementsByClassName("background")[0];
         divParent.style.backgroundImage = 'url("' + background_image + '")'
 
@@ -31,7 +29,7 @@ function playExtPage() {
         document.title = "Riproduci " + anime_title + " - Yunime";
 
         //Last episode button
-        var containerParent = document.getElementsByClassName("container")[1];
+        var containerParent = document.getElementsByClassName("play-container")[0];
         var playButton = document.createElement("A");
         playButton.className = "dropdown-item lastepisode loaded";
         playButton.id = String(number_episodes)
@@ -66,6 +64,7 @@ function playExtPage() {
                         request: true,
                     });
 
+
                     let buttonContainer = document.getElementById(numberEp);
                     let buttonClassName = buttonContainer.className
 
@@ -79,47 +78,45 @@ function playExtPage() {
                     buttonContainer.classList.remove("loaded");
 
 
-                            browser.storage.local.get(["response"], async function(result) {
-                                let status = result.response
-                                let isLastEpisode = buttonClassName.includes("lastepisode")
-                                if (status == 'Anime not found! (Line 39)' || status == 'Anime not found! (Line 34)') {
-                                    alert("Episodio non trovato!")
-                                }
-                                if (status == 1){
-                                    await sleep(1000)
-                                    buttonContainer.innerHTML = "Episodio " + numberEp
-                                    buttonContainer.style.padding = "1rem"
-                                    buttonContainer.style.backgroundImage = ""
-                                    if(isLastEpisode == true){
-                                        buttonContainer.className = "dropdown-item lastepisode loaded"
-                                    }else{
-                                        buttonContainer.className = "dropdown-item loaded"
-                                    }
-                                    browser.storage.local.set({ "animeClicked": anime_title, "episodeClicked": numberEp, "coverClicked": cover_image })
-                                }else if (status == 0){
-                                    buttonContainer.innerHTML = "Episodio " + numberEp
-                                    buttonContainer.style.padding = "1rem"
-                                    buttonContainer.style.backgroundImage = ""
-                                    if(isLastEpisode == true){
-                                        buttonContainer.className = "dropdown-item lastepisode loaded"
-                                    }else{
-                                        buttonContainer.className = "dropdown-item loaded"
-                                    }
+                    browser.storage.local.get(["response"], async function(result) {
+                        let status = result.response
+                        let isLastEpisode = buttonClassName.includes("lastepisode")
 
-                                    return alert("Episodio non disponibile")
-                                }else if (status == -1){
-                                    buttonContainer.innerHTML = "Episodio " + numberEp
-                                    buttonContainer.style.padding = "1rem"
-                                    buttonContainer.style.backgroundImage = ""
-                                    if(isLastEpisode == true){
-                                        buttonContainer.className = "dropdown-item lastepisode loaded"
-                                    }else{
-                                        buttonContainer.className = "dropdown-item loaded"
-                                    }
-                                    
-                                    return alert("VLC non trovato o non funzionante\nScaricalo da qui: https://www.videolan.org/vlc/")
-                                }
-                            });
+                        if (status == 1){
+                            await sleep(1000)
+                            buttonContainer.innerHTML = "Episodio " + numberEp
+                            buttonContainer.style.padding = "1rem"
+                            buttonContainer.style.backgroundImage = ""
+                            if(isLastEpisode == true){
+                                buttonContainer.className = "dropdown-item lastepisode loaded"
+                            }else{
+                                buttonContainer.className = "dropdown-item loaded"
+                            }
+                            browser.storage.local.set({ "animeClicked": anime_title, "episodeClicked": numberEp, "coverClicked": cover_image })
+                        }else if (status == 0){
+                            buttonContainer.innerHTML = "Episodio " + numberEp
+                            buttonContainer.style.padding = "1rem"
+                            buttonContainer.style.backgroundImage = ""
+                            if(isLastEpisode == true){
+                                buttonContainer.className = "dropdown-item lastepisode loaded"
+                            }else{
+                                buttonContainer.className = "dropdown-item loaded"
+                            }
+
+                            return alert("Episodio non disponibile")
+                        }else if (status == -1){
+                            buttonContainer.innerHTML = "Episodio " + numberEp
+                            buttonContainer.style.padding = "1rem"
+                            buttonContainer.style.backgroundImage = ""
+                            if(isLastEpisode == true){
+                                buttonContainer.className = "dropdown-item lastepisode loaded"
+                            }else{
+                                buttonContainer.className = "dropdown-item loaded"
+                            }
+
+                            return alert("VLC non trovato o non funzionante\nScaricalo da qui: https://www.videolan.org/vlc/")
+                        }
+                    });
 
 
                 },
