@@ -56,76 +56,86 @@ function playExtPage() {
         function postArguments(numberEp) {
             var mainButton = document.getElementById(numberEp);
 
+
+
             mainButton.addEventListener(
                 "click",
                 function(request, sender, response) {
+                    if (mainButton.className == "dropdown-item loaded"){
+                        chrome.runtime.sendMessage({
+                            animeTitle: anime_title,
+                            nEpisode: numberEp,
+                            request: true,
+                        });
 
-                    chrome.runtime.sendMessage({
-                        animeTitle: anime_title,
-                        nEpisode: numberEp,
-                        request: true,
-                    });
+                        let buttonContainer = document.getElementById(numberEp);
+                        let buttonClassName = buttonContainer.className
 
-                    let buttonContainer = document.getElementById(numberEp);
-                    let buttonClassName = buttonContainer.className
-                    console.log(buttonContainer)
-                    buttonContainer.style.backgroundImage = "url('../view/assets/Spinner_Loading.svg')"
-                    buttonContainer.style.backgroundSize = "50px"
-                    buttonContainer.style.backgroundPosition = "center"
-                    buttonContainer.style.backgroundRepeat = "no-repeat"
-                    buttonContainer.innerHTML = ""
-                    buttonContainer.style.padding = "1.7rem"
+                        buttonContainer.style.backgroundImage = "url('../view/assets/Spinner_Loading.svg')"
+                        buttonContainer.style.backgroundSize = "50px"
+                        buttonContainer.style.backgroundPosition = "center"
+                        buttonContainer.style.backgroundRepeat = "no-repeat"
+                        buttonContainer.innerHTML = ""
+                        buttonContainer.style.padding = "1.7rem"
+                        buttonContainer.style.cursor = "default"
 
-                    buttonContainer.classList.remove("loaded");
+                        buttonContainer.classList.remove("loaded");
 
 
-                            chrome.storage.local.get(["response"], async function(result) {
-                                let status = result.response
-                                let isLastEpisode = buttonClassName.includes("lastepisode")
 
-                                if (status == 1){
-                                    await sleep(1000)
-                                    buttonContainer.innerHTML = "Episodio " + numberEp
-                                    buttonContainer.style.padding = "1rem"
-                                    buttonContainer.style.backgroundImage = ""
-                                    if(isLastEpisode == true){
-                                        buttonContainer.className = "dropdown-item lastepisode loaded"
-                                    }else{
-                                        buttonContainer.className = "dropdown-item loaded"
-                                    }
-                                    chrome.storage.local.set({ "animeClicked": anime_title, "episodeClicked": numberEp, "coverClicked": cover_image })
-                                }else if (status == 0){
-                                    buttonContainer.innerHTML = "Episodio " + numberEp
-                                    buttonContainer.style.padding = "1rem"
-                                    buttonContainer.style.backgroundImage = ""
-                                    if(isLastEpisode == true){
-                                        buttonContainer.className = "dropdown-item lastepisode loaded"
-                                    }else{
-                                        buttonContainer.className = "dropdown-item loaded"
-                                    }
+                        chrome.storage.local.get(["response"], async function(result) {
+                            let status = result.response
 
-                                    return alert("Episodio non disponibile")
-                                }else if (status == -1){
-                                    buttonContainer.innerHTML = "Episodio " + numberEp
-                                    buttonContainer.style.padding = "1rem"
-                                    buttonContainer.style.backgroundImage = ""
-                                    if(isLastEpisode == true){
-                                        buttonContainer.className = "dropdown-item lastepisode loaded"
-                                    }else{
-                                        buttonContainer.className = "dropdown-item loaded"
-                                    }
-                                    
-                                    return alert("VLC non trovato o non funzionante\nScaricalo da qui: https://www.videolan.org/vlc/")
+                            let isLastEpisode = buttonClassName.includes("lastepisode")
+
+                            if (status == 1){
+                                await sleep(1000)
+                                buttonContainer.innerHTML = "Episodio " + numberEp
+                                buttonContainer.style.padding = "1rem"
+                                buttonContainer.style.backgroundImage = ""
+                                buttonContainer.style.cursor = "pointer"
+                                if(isLastEpisode == true){
+                                    buttonContainer.className = "dropdown-item lastepisode loaded"
+                                }else{
+                                    buttonContainer.className = "dropdown-item loaded"
                                 }
-                            });
+                                chrome.storage.local.set({ "animeClicked": anime_title, "episodeClicked": numberEp, "coverClicked": cover_image })
+                            }else if (status == 0){
+                                buttonContainer.innerHTML = "Episodio " + numberEp
+                                buttonContainer.style.padding = "1rem"
+                                buttonContainer.style.backgroundImage = ""
+                                buttonContainer.style.cursor = "pointer"
+                                if(isLastEpisode == true){
+                                    buttonContainer.className = "dropdown-item lastepisode loaded"
+                                }else{
+                                    buttonContainer.className = "dropdown-item loaded"
+                                }
 
+                                return alert("Episodio non disponibile")
+                            }else if (status == -1){
+                                buttonContainer.innerHTML = "Episodio " + numberEp
+                                buttonContainer.style.padding = "1rem"
+                                buttonContainer.style.backgroundImage = ""
+                                buttonContainer.style.cursor = "pointer"
+                                if(isLastEpisode == true){
+                                    buttonContainer.className = "dropdown-item lastepisode loaded"
+                                }else{
+                                    buttonContainer.className = "dropdown-item loaded"
+                                }
+
+                                return alert("VLC non trovato o non funzionante\nScaricalo da qui: https://www.videolan.org/vlc/")
+                            }
+                        });
+
+                    }else{
+                        console.log("In caricamento...")
+                    }
 
                 },
                 false
             );
 
         }
-
 
 
     });
