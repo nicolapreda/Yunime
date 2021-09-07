@@ -61,7 +61,7 @@ function playExtPage() {
             mainButton.addEventListener(
                 "click",
                 function(request, sender, response) {
-                    if (mainButton.className == "dropdown-item loaded"){
+                    if (mainButton.className == "dropdown-item loaded" || "dropdown-item lastepisode loaded"){
                         chrome.runtime.sendMessage({
                             animeTitle: anime_title,
                             nEpisode: numberEp,
