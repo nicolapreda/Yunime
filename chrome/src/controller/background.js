@@ -1,8 +1,8 @@
 'use strict'
 
 //Open NativeConnect download when extension is installed
-chrome.runtime.onInstalled.addListener(function (object) {
-    chrome.tabs.create({url: "https://nicolapreda.me/yunime/#download"});
+chrome.runtime.onInstalled.addListener(function(object) {
+    chrome.tabs.create({ url: "https://nicolapreda.me/yunime/#download" });
 });
 
 
@@ -26,34 +26,31 @@ chrome.runtime.onMessage.addListener(function(result, sender) {
 
     if (request == true) {
 
-        this.port = chrome.runtime.connectNative('com.diskxo.yunime');
+        var port = chrome.runtime.connectNative('com.diskxo.yunime');
 
-        this.port.postMessage({
+        port.postMessage({
             animeTitle: anime_title,
             episodeNumber: episode_number
         });
 
-        this.port.onMessage.addListener(res => {
-                console.log(res)
-                if (res.res == 1){
-                    chrome.storage.local.set({ "response": 1 })
-                    chrome.runtime.sendMessage({
-                        reponse: 1
-                    });
-                } else if (res.res == 0){
-                    chrome.storage.local.set({ "response": 0 })
-                    chrome.runtime.sendMessage({
-                        reponse: 0
-                    });
-                }
-                else if (res.res == -1){
-                    chrome.storage.local.set({ "response": -1 })
-                    chrome.runtime.sendMessage({
-                        reponse: -1
-                    });
-                }
+        port.onMessage.addListener(res => {
+
+            if (res.res == 1) {
+                chrome.storage.local.set({ "response": 1 })
+
+            } else if (res.res == 0) {
+                chrome.storage.local.set({ "response": 0 })
+
+            } else if (res.res == -1) {
+                chrome.storage.local.set({ "response": -1 })
+            }
+
 
         });
-
+        port.onDisconnect.addListener(res => {
+            chrome.runtime.sendMessage({
+                "stopped": 1
+            })
+        })
     }
 });
