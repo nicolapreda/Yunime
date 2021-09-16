@@ -1,80 +1,112 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
 /*--Scrollbar--*/
+
 ::-webkit-scrollbar {
-  width: 5px;
+    width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d4d4d4;
+    background: #d4d4d4;
 }
 
 body {
-  overflow-x: hidden;
-  margin: 0;
-  padding: 0;
-  background-color: #0b1622 !important;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    background-color: #0b1622 !important;
+}
+
+
+/*Navbar custom*/
+
+.navbar-custom {
+    filter: drop-shadow(0px 4px 9px rgba(18, 34, 53, 0.20));
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+
+.logo {
+    width: 20px;
+}
+
+.settings-button-image {
+    transition: all .2s ease-in-out;
+}
+
+.settings-button-image:hover {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+}
+
+
+/*Content*/
+
+.content {
+    margin-top: 5rem;
 }
 
 .content .container {
-  width: auto !important;
-  min-width: 400px;
+    width: auto !important;
+    min-width: 400px;
 }
 
 .content .banner {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-weight: 500;
-  font-size: 50px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 500;
+    font-size: 50px;
 }
 
 .content .description {
-  margin-top: 1rem;
-  font-size: 20px;
-  color: #a8a8a8;
-  font-family: "Roboto", sans-serif;
+    margin-top: .5rem;
+    font-size: 20px;
+    color: #cecbcb;
+    font-family: "Roboto", sans-serif;
 }
 
 .recents .card {
-  border-radius: 15px !important;
-  background-color: #151f2e !important;
+    border-radius: 15px !important;
+    background-color: #151f2e !important;
 }
 
 .recents .card-horizontal {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-flex: 1;
-      -ms-flex: 1 1 auto;
-          flex: 1 1 auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
 }
 
 .recents .card-horizontal .cover-image {
-  height: 200px;
-  border-radius: 15px 0px 0px 15px;
+    height: 200px;
+    border-radius: 15px 0px 0px 15px;
 }
 
 .dropdown-item {
-  cursor: pointer;
-  color: white !important;
-  background-color: #1f2e46!important;
-  border-radius: 5px;
-  margin-top: 1rem;
-  text-align: center;
-  -webkit-transition: 0.2s ease-in;
-  transition: none !important;
-  -webkit-box-shadow: 0px 4px 30px rgba(21, 31, 46, 0.5);
-  box-shadow: 0px 4px 30px rgba(21, 31, 46, 0.5);
+    cursor: pointer;
+    color: white !important;
+    background-color: #192434!important;
+    border-radius: 5px;
+    margin-top: 1rem;
+    text-align: center;
+    -webkit-transition: 0.2s ease-in;
+    transition: none !important;
+    -webkit-box-shadow: 0px 4px 30px rgba(21, 31, 46, 0.5);
+    box-shadow: 0px 4px 30px rgba(21, 31, 46, 0.5);
 }
 
-.loaded{
-  padding: 1rem!important;
+.loaded {
+    padding: 1rem!important;
 }
+
 .loaded:hover {
-  color: black !important;
-  background-color: #3db4f2 !important;
-  -webkit-box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.5);
+    color: black !important;
+    background-color: #3db4f2 !important;
+    -webkit-box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.5);
 }

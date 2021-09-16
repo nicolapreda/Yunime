@@ -72,7 +72,6 @@ function getPlayPopup() {
     chrome.runtime.sendMessage({ page: "play" });
 
     chrome.storage.local.set({ animeTitle: anime_title, numberEpisodes: number_episodes, backgroundImage: background_image, coverImage: cover_image });
-
 }
 
 function getIndexPopup() {

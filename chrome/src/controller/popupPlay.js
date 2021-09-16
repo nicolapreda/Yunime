@@ -29,9 +29,9 @@ function playExtPage() {
                 documentTitle.style.position = "relative";
                 divParent.style.backgroundImage = "";
             }
-            documentTitle.innerHTML = "Riproduci\n" + anime_title;
+            documentTitle.innerHTML = anime_title;
 
-            document.title = "Riproduci " + anime_title + " - Yunime";
+            document.title = anime_title + " - Yunime";
 
             //Last episode button
             var containerParent = document.getElementsByClassName("container")[1];
@@ -158,6 +158,7 @@ function playExtPage() {
         }
     );
 }
+
 chrome.runtime.onMessage.addListener(function(result, sender) {
     var isStopped = result.stopped;
     if (isStopped == 1) {
