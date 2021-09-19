@@ -78,7 +78,7 @@ function playExtPage() {
                             let buttonClassName = buttonContainer.className;
 
                             buttonContainer.style.backgroundImage =
-                                "url('../view/assets/Spinner_Loading.svg')";
+                                "url('../view/assets/animations/Spinner_Loading.svg')";
                             buttonContainer.style.backgroundSize = "50px";
                             buttonContainer.style.backgroundPosition = "center";
                             buttonContainer.style.backgroundRepeat = "no-repeat";
@@ -140,7 +140,7 @@ function playExtPage() {
                                             }
 
                                             return alert(
-                                                "VLC non trovato o non funzionante\nScaricalo da qui: https://www.videolan.org/vlc/"
+                                                "VLC non trovato o non funzionante\nScaricalo cliccando 'Ok'https://www.videolan.org/vlc/"
                                             );
                                         }
                                     }
@@ -162,6 +162,9 @@ function playExtPage() {
 chrome.runtime.onMessage.addListener(function(result, sender) {
     var isStopped = result.stopped;
     if (isStopped == 1) {
+        document.createElement("DIV");
+
         window.confirm("Episodio non disponibile")
     }
+
 })

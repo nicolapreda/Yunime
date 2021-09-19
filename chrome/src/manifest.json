@@ -11,20 +11,20 @@
     }],
 
     "background": {
-        "scripts": ["controller/background.js"],
+        "scripts": ["./model/background.js"],
         "persistent": true
 
     },
     "icons": {
-        "16": "./data/icons/icon_16.png",
-        "19": "./data/icons/icon_19.png",
-        "32": "./data/icons/icon_32.png",
-        "38": "./data/icons/icon_38.png",
-        "48": "./data/icons/icon_48.png",
-        "64": "./data/icons/icon_64.png",
-        "128": "./data/icons/icon_128.png",
-        "256": "./data/icons/icon_256.png",
-        "512": "./data/icons/icon_512.png"
+        "16": "./view/assets/icons/icon_16.png",
+        "19": "./view/assets/icons/icon_19.png",
+        "32": "./view/assets/icons/icon_32.png",
+        "38": "./view/assets/icons/icon_38.png",
+        "48": "./view/assets/icons/icon_48.png",
+        "64": "./view/assets/icons/icon_64.png",
+        "128": "./view/assets/icons/icon_128.png",
+        "256": "./view/assets/icons/icon_256.png",
+        "512": "./view/assets/icons/icon_512.png"
     },
     "browser_action": {
         "default_popup": "view/play.html"
@@ -40,8 +40,7 @@
 
     "web_accessible_resources": [
         "view/play.html",
-        "view/index.html",
-        "view/assets/Spinner_Loading.svg"
+        "view/index.html"
     ]
 
 }

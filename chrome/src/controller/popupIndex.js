@@ -4,6 +4,7 @@ function sleep(ms) {
 }
 
 window.addEventListener("load", (event) => {
+
     getRecentsEpisodes();
 });
 
@@ -41,7 +42,7 @@ function createRecentCard(animeTitle, episodeNumber, coverImage) {
 
         var resumeButton = document.getElementsByClassName("dropdown-item")[0];
         resumeButton.innerHTML = "Episodio " + episodeNumber
-        //Send request
+            //Send request
         resumeButton.addEventListener(
             "click",
             function() {
@@ -64,21 +65,21 @@ function createRecentCard(animeTitle, episodeNumber, coverImage) {
 
                 chrome.storage.local.get(["response"], async function(result) {
                     let status = result.response
-                    if (status == 1){
+                    if (status == 1) {
                         await sleep(1000)
                         resumeButton.innerHTML = "Episodio " + episodeNumber
                         resumeButton.style.padding = "1rem"
                         resumeButton.style.backgroundImage = ""
                         resumeButton.className = "dropdown-item loaded"
                         chrome.storage.local.set({ "animeClicked": anime_title, "episodeClicked": numberEp, "coverClicked": cover_image })
-                    }else if (status == 0){
+                    } else if (status == 0) {
                         resumeButton.innerHTML = "Episodio " + episodeNumber
                         resumeButton.style.padding = "1rem"
                         resumeButton.style.backgroundImage = ""
                         resumeButton.className = "dropdown-item loaded"
 
                         return alert("Episodio non disponibile")
-                    }else if (status == -1){
+                    } else if (status == -1) {
                         resumeButton.innerHTML = "Episodio " + episodeNumber
                         resumeButton.style.padding = "1rem"
                         resumeButton.style.backgroundImage = ""
