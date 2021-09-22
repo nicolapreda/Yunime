@@ -140,14 +140,14 @@ function playExtPage() {
                                             }
 
                                             return alert(
-                                                "VLC non trovato o non funzionante\nScaricalo cliccando 'Ok'https://www.videolan.org/vlc/"
+                                                "VLC non trovato o non funzionante"
                                             );
                                         }
                                     }
                                 );
                             }
                         } else {
-                            return console.log("In caricamento...");
+                            return;
                         }
 
                     },
@@ -162,8 +162,6 @@ function playExtPage() {
 chrome.runtime.onMessage.addListener(function(result, sender) {
     var isStopped = result.stopped;
     if (isStopped == 1) {
-        document.createElement("DIV");
-
         window.confirm("Episodio non disponibile")
     }
 
