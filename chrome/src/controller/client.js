@@ -27,9 +27,9 @@ async function pageScan() {
 
 
 function getPlayPopup() {
-    var anime_title = document.querySelector(
-        "#app > div.page-content > div > div.header-wrap > div.header > div > div.content > h1"
-    ).textContent;
+    var anime_title = document.querySelector('meta[property="og:title"]').content
+    console.log(anime_title)
+
     var number_episodes = document.querySelector(
         "#app > div.page-content > div > div.content.container > div.sidebar > div.data > div:nth-child(2) > div.value"
     ).textContent;
