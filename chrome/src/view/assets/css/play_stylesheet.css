@@ -72,11 +72,6 @@ body {
     min-width: 400px;
 }
 
-.content .episodes {
-    margin-top: 7rem;
-    margin-bottom: 10rem;
-}
-
 .content .dropdown-item {
     cursor: pointer;
     color: white !important;

@@ -43,50 +43,60 @@ function createRecentCard(animeTitle, episodeNumber, coverImage) {
         var resumeButton = document.getElementsByClassName("dropdown-item")[0];
         resumeButton.innerHTML = "Episodio " + episodeNumber
             //Send request
+
         resumeButton.addEventListener(
             "click",
             function() {
+                /*--Check if the button has been already clicked--*/
+                var buttonClassName = resumeButton.className;
+                var isLoaded = buttonClassName.includes("loaded");
+                if (isLoaded == true) { /*--xCheck if the button has been already clickedx--*/
 
-                chrome.runtime.sendMessage({
-                    animeTitle: animeTitle,
-                    nEpisode: episodeNumber,
-                    request: true,
-                });
+                    chrome.runtime.sendMessage({
+                        animeTitle: animeTitle,
+                        nEpisode: episodeNumber,
+                        request: true,
+                    });
 
 
-                resumeButton.style.backgroundImage = "url('../view/assets/Spinner_Loading.svg')"
-                resumeButton.style.backgroundSize = "50px"
-                resumeButton.style.backgroundPosition = "center"
-                resumeButton.style.backgroundRepeat = "no-repeat"
-                resumeButton.innerHTML = ""
-                resumeButton.style.padding = "1.7rem"
+                    resumeButton.style.backgroundImage = "url('../view/assets/animations/Spinner_Loading.svg')"
+                    resumeButton.style.backgroundSize = "50px"
+                    resumeButton.style.backgroundPosition = "center"
+                    resumeButton.style.backgroundRepeat = "no-repeat"
+                    resumeButton.innerHTML = ""
+                    resumeButton.style.padding = "1.7rem"
+                    resumeButton.classList.remove("loaded");
 
-                resumeButton.classList.remove("loaded");
+                    chrome.storage.local.get(["response"], async function(result) {
+                        let status = result.response
+                        if (status == 1) {
+                            await sleep(1000)
+                            resumeButton.innerHTML = "Episodio " + episodeNumber
+                            resumeButton.style.padding = "1rem"
+                            resumeButton.style.backgroundImage = ""
+                            resumeButton.className = "dropdown-item loaded"
+                            chrome.storage.local.set({ "animeClicked": anime_title, "episodeClicked": numberEp, "coverClicked": cover_image })
+                        } else if (status == 0) {
+                            resumeButton.innerHTML = "Episodio " + episodeNumber
+                            resumeButton.style.padding = "1rem"
+                            resumeButton.style.backgroundImage = ""
+                            resumeButton.className = "dropdown-item loaded"
 
-                chrome.storage.local.get(["response"], async function(result) {
-                    let status = result.response
-                    if (status == 1) {
-                        await sleep(1000)
-                        resumeButton.innerHTML = "Episodio " + episodeNumber
-                        resumeButton.style.padding = "1rem"
-                        resumeButton.style.backgroundImage = ""
-                        resumeButton.className = "dropdown-item loaded"
-                        chrome.storage.local.set({ "animeClicked": anime_title, "episodeClicked": numberEp, "coverClicked": cover_image })
-                    } else if (status == 0) {
-                        resumeButton.innerHTML = "Episodio " + episodeNumber
-                        resumeButton.style.padding = "1rem"
-                        resumeButton.style.backgroundImage = ""
-                        resumeButton.className = "dropdown-item loaded"
+                            return alert("Episodio non disponibile")
+                        } else if (status == -1) {
+                            resumeButton.innerHTML = "Episodio " + episodeNumber
+                            resumeButton.style.padding = "1rem"
+                            resumeButton.style.backgroundImage = ""
+                            resumeButton.className = "dropdown-item loaded"
+                            return alert("VLC non trovato o non funzionante\nScaricalo da qui: https://www.videolan.org/vlc/")
 
-                        return alert("Episodio non disponibile")
-                    } else if (status == -1) {
-                        resumeButton.innerHTML = "Episodio " + episodeNumber
-                        resumeButton.style.padding = "1rem"
-                        resumeButton.style.backgroundImage = ""
-                        resumeButton.className = "dropdown-item loaded"
-                        return alert("VLC non trovato o non funzionante\nScaricalo da qui: https://www.videolan.org/vlc/")
-                    }
-                });
+                        }
+                    });
+                } else {
+
+                    return;
+
+                }
 
             },
             false
@@ -94,3 +104,12 @@ function createRecentCard(animeTitle, episodeNumber, coverImage) {
         imgDivParent.appendChild(coverImageParent);
     }
 }
+
+//Check if the episode is not available
+chrome.runtime.onMessage.addListener(function(result, sender) {
+    var isStopped = result.stopped;
+    if (isStopped == 1) {
+        window.confirm("Episodio non disponibile")
+    }
+
+})

@@ -20,22 +20,34 @@
     </nav>
 
     <div class="content">
+        <!--Header container-->
         <div class="background">
         </div>
         <div class="container">
             <h1 class="foreground text-center text-white" id="anime_title"></h1>
         </div>
+        <!--xHeader containerx-->
 
-        <div class="container episodes ml-5 mr-5">
-
+        <!--Alerts-->
+        <div class="alert alert-danger alert-dismissible fade show m-5" role="alert" id="alert">
+            <strong>Episodio non disponibile!</strong> You should check in on some of those fields below.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="closeBtn">
+              <span aria-hidden="true">&times;</span>
+            </button>
         </div>
+        <!--xAlertsx-->
+
+        <!--Episodes container-->
+        <div class="container episodes m-5">
+        </div>
+        <!--xEpisodes containerx-->
+
     </div>
 
-    <!--Add DOM Components-->
-
+    <!--Add DOM&JS Components-->
     <script src="../controller/popupPlay.js "></script>
     <script src="../controller/lib/jquery-3.6.0.min.js"></script>
+    <script src="../controller/lib/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
-
 
 </html>

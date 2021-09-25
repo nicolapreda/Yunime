@@ -1,5 +1,5 @@
 //Check the version of the extension
-const checkVers = "1.1"
+const checkVers = "1.1";
 
 //Sleep function
 function sleep(ms) {
@@ -8,6 +8,8 @@ function sleep(ms) {
 
 //Start functions on page load
 window.addEventListener("load", (event) => {
+    var hideAlert = document.getElementById("alert");
+    hideAlert.style.display = "hidden";
     playExtPage();
 });
 
@@ -56,8 +58,6 @@ function playExtPage() {
 
                 postArguments(x);
             }
-
-
 
             function postArguments(numberEp) {
                 var mainButton = document.getElementById(numberEp);
@@ -139,9 +139,7 @@ function playExtPage() {
                                                 buttonContainer.className = "dropdown-item loaded";
                                             }
 
-                                            return alert(
-                                                "VLC non trovato o non funzionante"
-                                            );
+                                            return alert("VLC non trovato o non funzionante");
                                         }
                                     }
                                 );
@@ -149,20 +147,26 @@ function playExtPage() {
                         } else {
                             return;
                         }
-
                     },
                     false
                 );
-
             }
         }
     );
 }
 
+//Check if the episode is not available
 chrome.runtime.onMessage.addListener(function(result, sender) {
     var isStopped = result.stopped;
     if (isStopped == 1) {
-        window.confirm("Episodio non disponibile")
+        var hideAlert = document.getElementById("alert");
+        hideAlert.style.display = "visible";
+        window.parent.location.href = "#";
     }
+});
 
-})
+var btnClose = document.getElementById("closeBtn");
+btnClose.addEventListener("click", function(request, sender, response) {
+    var hideAlert = document.getElementById("alert");
+    hideAlert.style.display = "hidden";
+});
