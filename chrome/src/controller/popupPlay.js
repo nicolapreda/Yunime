@@ -6,34 +6,38 @@ function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-//Start functions on page load
+//Start main function on page load
 window.addEventListener("load", (event) => {
-    var hideAlert = document.getElementById("alert");
-    hideAlert.style.display = "hidden";
     playExtPage();
 });
 
 function playExtPage() {
     chrome.storage.local.get(
-        ["animeTitle", "numberEpisodes", "backgroundImage", "coverImage"],
+        ["mainTitle", "titleEnglish", "titleRomaji", "numberEpisodes", "backgroundImage", "coverImage"],
         function(result) {
-            var anime_title = result.animeTitle;
+            //Define variables
+            var main_title = result.mainTitle
+            var title_english = result.titleEnglish;
+            var title_romaji = result.titleRomaji;
             var number_episodes = result.numberEpisodes;
             var background_image = result.backgroundImage;
             var cover_image = result.coverImage;
 
+            //Set anime background
             var divParent = document.getElementsByClassName("background")[0];
             divParent.style.backgroundImage = 'url("' + background_image + '")';
-
             var documentTitle = document.getElementById("anime_title");
 
+            //Style if there isn't a background
             if (background_image == "") {
                 documentTitle.style.position = "relative";
                 divParent.style.backgroundImage = "";
             }
-            documentTitle.innerHTML = anime_title;
 
-            document.title = anime_title + " - Yunime";
+            //Set title in play.hmtl
+            documentTitle.innerHTML = main_title;
+            //Set page title in play.html
+            document.title = main_title + " - Yunime";
 
             //Last episode button
             var containerParent = document.getElementsByClassName("container")[1];
@@ -68,8 +72,10 @@ function playExtPage() {
                         var buttonClassName = mainButton.className;
                         var isLoaded = buttonClassName.includes("loaded");
                         if (isLoaded == true) {
+
                             chrome.runtime.sendMessage({
-                                animeTitle: anime_title,
+                                titleEnglish: title_english,
+                                titleRomaji: title_romaji,
                                 nEpisode: numberEp,
                                 request: true,
                             });
@@ -98,7 +104,9 @@ function playExtPage() {
                                         let isLastEpisode = buttonClassName.includes("lastepisode");
 
                                         if (status == 1) {
-                                            await sleep(1000);
+                                            //Wait for 1.1 sec
+                                            await sleep(1100);
+                                            //Returns default button
                                             buttonContainer.innerHTML = "Episodio " + numberEp;
                                             buttonContainer.style.padding = "1rem";
                                             buttonContainer.style.backgroundImage = "";
@@ -110,11 +118,12 @@ function playExtPage() {
                                                 buttonContainer.className = "dropdown-item loaded";
                                             }
                                             chrome.storage.local.set({
-                                                animeClicked: anime_title,
+                                                animeClicked: main_title,
                                                 episodeClicked: numberEp,
                                                 coverClicked: cover_image,
                                             });
                                         } else if (status == 0) {
+                                            //Returns default button
                                             buttonContainer.innerHTML = "Episodio " + numberEp;
                                             buttonContainer.style.padding = "1rem";
                                             buttonContainer.style.backgroundImage = "";
@@ -126,7 +135,12 @@ function playExtPage() {
                                                 buttonContainer.className = "dropdown-item loaded";
                                             }
 
-                                            return alert("Episodio non disponibile");
+                                            //Returns alert button
+                                            var hideAlert = document.getElementById("alert");
+                                            var alertMessage = document.getElementById("alertText")
+                                            alertMessage.innerHTML = 'Episodio non disponibile!'
+                                            hideAlert.style.visibility = "visible";
+
                                         } else if (status == -1) {
                                             buttonContainer.innerHTML = "Episodio " + numberEp;
                                             buttonContainer.style.padding = "1rem";
@@ -139,7 +153,11 @@ function playExtPage() {
                                                 buttonContainer.className = "dropdown-item loaded";
                                             }
 
-                                            return alert("VLC non trovato o non funzionante");
+                                            //Returns alert button
+                                            var hideAlert = document.getElementById("alert");
+                                            var alertMessage = document.getElementById("alertText")
+                                            alertMessage.innerHTML = '<strong>VLC Media Player non trovato! </strong>Clicca <a href="https://www.videolan.org/vlc/">qui</a> per installarlo.'
+                                            hideAlert.style.visibility = "visible";
                                         }
                                     }
                                 );
@@ -160,13 +178,16 @@ chrome.runtime.onMessage.addListener(function(result, sender) {
     var isStopped = result.stopped;
     if (isStopped == 1) {
         var hideAlert = document.getElementById("alert");
-        hideAlert.style.display = "visible";
-        window.parent.location.href = "#";
+        var alertMessage = document.getElementById("alertText")
+        alertMessage.innerHTML = 'Episodio non disponibile!'
+        hideAlert.style.visibility = "visible";
+
     }
 });
 
+// Close alert when button is clicked
 var btnClose = document.getElementById("closeBtn");
 btnClose.addEventListener("click", function(request, sender, response) {
     var hideAlert = document.getElementById("alert");
-    hideAlert.style.display = "hidden";
+    hideAlert.style.visibility = "hidden";
 });

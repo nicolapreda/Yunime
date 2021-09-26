@@ -19,7 +19,8 @@ chrome.runtime.onMessage.addListener(function(request) {
 });
 
 chrome.runtime.onMessage.addListener(function(result, sender) {
-    let anime_title = result.animeTitle;
+    let title_english = result.titleEnglish;
+    let title_romaji = result.titleRomaji;
     let episode_number = result.nEpisode;
     let request = result.request;
 
@@ -27,11 +28,13 @@ chrome.runtime.onMessage.addListener(function(result, sender) {
         var port = chrome.runtime.connectNative("com.diskxo.yunime");
 
         port.postMessage({
-            animeTitle: anime_title,
+            titleEnglish: title_english,
+            titleRomaji: title_romaji,
             episodeNumber: episode_number,
         });
 
         port.onMessage.addListener((res) => {
+            console.log(res)
             if (res.vers != "1.1") {
                 if (window.confirm("E' disponibile un nuovo aggiornamento!\nScaricalo cliccando 'Ok'")) {
                     window.open('https://nicolapreda.me/yunime/#download', '_blank');

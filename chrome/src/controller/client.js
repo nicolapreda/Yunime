@@ -27,29 +27,43 @@ async function pageScan() {
 
 
 function getPlayPopup() {
-    var anime_title = document.querySelector('meta[property="og:title"]').content
-    console.log(anime_title)
 
-    var number_episodes = document.querySelector(
-        "#app > div.page-content > div > div.content.container > div.sidebar > div.data > div:nth-child(2) > div.value"
-    ).textContent;
+    //Gets Romaji and English Title
+    var main_title = document.querySelector('meta[property="og:title"]').content
 
-    //Get background image
+
+    try {
+        var title_romaji = document.querySelector("#app > div.page-content > div > div.content.container > div.sidebar > div.data > div:nth-child(17) > div.value").textContent
+    } catch {
+        var title_romaji = ""
+    }
+    try {
+        var title_english = document.querySelector("#app > div.page-content > div > div.content.container > div.sidebar > div.data > div:nth-child(18) > div.value").textContent
+    } catch {
+        var title_english = ""
+    }
+
+
+    //Gets background image
     var parentBackgroundImage = document.querySelector("#app > div.page-content > div > div.header-wrap > div.banner")
     if (parentBackgroundImage) {
         var background_image = parentBackgroundImage.style.backgroundImage;
         background_image = background_image.replace('url("', '');
         background_image = background_image.replace('")', '')
-
     }
 
-    //Get cover image
+    //Gets cover image
     var cover_image = document.querySelector("#app > div.page-content > div > div.header-wrap > div.header > div.container > div.cover-wrap.overlap-banner > div > img")
     if (!cover_image) {
         cover_image = document.querySelector("#app > div.page-content > div > div.header-wrap > div > div.container > div.cover-wrap > div > img")
         background_image = ""
     }
     cover_image = cover_image.src
+
+    //Gets episode numbers
+    var number_episodes = document.querySelector(
+        "#app > div.page-content > div > div.content.container > div.sidebar > div.data > div:nth-child(2) > div.value"
+    ).textContent;
 
     if (isNaN(number_episodes)) {
         try {
@@ -69,9 +83,11 @@ function getPlayPopup() {
         number_episodes = number_episodes - 1;
     }
 
+    //Sends in chrome local storage play page
     chrome.runtime.sendMessage({ page: "play" });
 
-    chrome.storage.local.set({ animeTitle: anime_title, numberEpisodes: number_episodes, backgroundImage: background_image, coverImage: cover_image });
+    //Sends in chrome local storage title,episodes, cover and banner
+    chrome.storage.local.set({ mainTitle: main_title, titleRomaji: title_romaji, titleEnglish: title_english, numberEpisodes: number_episodes, backgroundImage: background_image, coverImage: cover_image });
 }
 
 function getIndexPopup() {
