@@ -31,17 +31,17 @@ function getPlayPopup() {
     //Gets Romaji and English Title
     var main_title = document.querySelector('meta[property="og:title"]').content
 
+    var sec_titles = document.title
+    sec_titles = sec_titles.split(" · AniList")
 
-    try {
-        var title_romaji = document.querySelector("#app > div.page-content > div > div.content.container > div.sidebar > div.data > div:nth-child(17) > div.value").textContent
-    } catch {
-        var title_romaji = ""
-    }
-    try {
-        var title_english = document.querySelector("#app > div.page-content > div > div.content.container > div.sidebar > div.data > div:nth-child(18) > div.value").textContent
-    } catch {
-        var title_english = ""
-    }
+    var title_romaji = sec_titles[0].split(" (")
+    var title_english = title_romaji[1].split(")")
+
+
+    title_english = title_english[1]
+    title_romaji = title_romaji[0]
+    console.log(title_romaji)
+    console.log(title_english)
 
 
     //Gets background image
