@@ -27,21 +27,23 @@ async function pageScan() {
 
 
 function getPlayPopup() {
-
-    //Gets Romaji and English Title
-    var main_title = document.querySelector('meta[property="og:title"]').content
+    var main_title = window.location.href
+    main_title = main_title.split("/")
+    main_title = main_title[5]
+    main_title = main_title.replaceAll("-", " ")
+    title_english = main_title;
 
     var sec_titles = document.title
     sec_titles = sec_titles.split(" · AniList")
-
     var title_romaji = sec_titles[0].split(" (")
-    var title_english = title_romaji[1].split(")")
-
-
-    title_english = title_english[1]
     title_romaji = title_romaji[0]
-    console.log(title_romaji)
+    if (title_romaji == "AniList") {
+        title_romaji = ""
+    }
+
     console.log(title_english)
+    console.log(title_romaji)
+
 
 
     //Gets background image
