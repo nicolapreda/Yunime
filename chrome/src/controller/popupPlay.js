@@ -117,8 +117,11 @@ function playExtPage() {
                                             } else {
                                                 buttonContainer.className = "dropdown-item loaded";
                                             }
+
+                                            //Send data to index page
                                             chrome.storage.local.set({
-                                                animeClicked: main_title,
+                                                anime_clicked_title1: title_english,
+                                                anime_clicked_title2: title_romaji,
                                                 episodeClicked: numberEp,
                                                 coverClicked: cover_image,
                                             });

@@ -10,21 +10,20 @@ window.addEventListener("load", (event) => {
 
 function getRecentsEpisodes() {
     chrome.storage.local.get(
-        ["animeClicked", "titleEnglish", "titleRomaji", "episodeClicked", "coverClicked"],
+        ["anime_clicked_title1", "anime_clicked_title2", "episodeClicked", "coverClicked"],
         function(result) {
-            var animeTitle = result.animeClicked
-            var title_english = result.titleEnglish;
-            var title_romaji = result.titleRomaji;
+            var title_english = result.anime_clicked_title1;
+            var title_romaji = result.anime_clicked_title2;
             var episodeNumber = result.episodeClicked;
             var cover_image = result.coverClicked;
-            createRecentCard(animeTitle, title_english, title_romaji, String(episodeNumber), cover_image);
+            createRecentCard(title_english, title_romaji, String(episodeNumber), cover_image);
         }
     );
 }
 
-function createRecentCard(animeTitle, title_english, title_romaji, episodeNumber, coverImage) {
+function createRecentCard(title_english, title_romaji, episodeNumber, coverImage) {
     if (
-        animeTitle == null &&
+        title_english == null &&
         episodeNumber == "undefined" &&
         coverImage == null
     ) {
@@ -40,7 +39,7 @@ function createRecentCard(animeTitle, title_english, title_romaji, episodeNumber
         coverImageParent.src = coverImage;
 
         var infoTitle = document.getElementsByClassName("card-title")[0];
-        infoTitle.innerHTML = animeTitle;
+        infoTitle.innerHTML = title_english;
 
         var resumeButton = document.getElementsByClassName("dropdown-item")[0];
         resumeButton.innerHTML = "Episodio " + episodeNumber
@@ -56,7 +55,7 @@ function createRecentCard(animeTitle, title_english, title_romaji, episodeNumber
                     chrome.runtime.sendMessage({
                         titleEnglish: title_english,
                         titleRomaji: title_romaji,
-                        nEpisode: numberEp,
+                        nEpisode: episodeNumber,
                         request: true,
                     });
 
@@ -75,33 +74,20 @@ function createRecentCard(animeTitle, title_english, title_romaji, episodeNumber
                             //Wait for 1.1 sec
                             await sleep(1100);
                             //Returns default button
-                            buttonContainer.innerHTML = "Episodio " + numberEp;
-                            buttonContainer.style.padding = "1rem";
-                            buttonContainer.style.backgroundImage = "";
-                            buttonContainer.style.cursor = "pointer";
-                            if (isLastEpisode == true) {
-                                buttonContainer.className =
-                                    "dropdown-item lastepisode loaded";
-                            } else {
-                                buttonContainer.className = "dropdown-item loaded";
-                            }
-                            chrome.storage.local.set({
-                                animeClicked: main_title,
-                                episodeClicked: numberEp,
-                                coverClicked: cover_image,
-                            });
+                            resumeButton.innerHTML = "Episodio " + episodeNumber;
+                            resumeButton.style.padding = "1rem";
+                            resumeButton.style.backgroundImage = "";
+                            resumeButton.style.cursor = "pointer";
+                            resumeButton.className = "dropdown-item loaded";
+
                         } else if (status == 0) {
                             //Returns default button
-                            buttonContainer.innerHTML = "Episodio " + numberEp;
-                            buttonContainer.style.padding = "1rem";
-                            buttonContainer.style.backgroundImage = "";
-                            buttonContainer.style.cursor = "pointer";
-                            if (isLastEpisode == true) {
-                                buttonContainer.className =
-                                    "dropdown-item lastepisode loaded";
-                            } else {
-                                buttonContainer.className = "dropdown-item loaded";
-                            }
+                            resumeButton.innerHTML = "Episodio " + episodeNumber;
+                            resumeButton.style.padding = "1rem";
+                            resumeButton.style.backgroundImage = "";
+                            resumeButton.style.cursor = "pointer";
+                            resumeButton.className = "dropdown-item loaded";
+
 
                             //Returns alert button
                             var hideAlert = document.getElementById("alert");
@@ -110,16 +96,11 @@ function createRecentCard(animeTitle, title_english, title_romaji, episodeNumber
                             hideAlert.style.visibility = "visible";
 
                         } else if (status == -1) {
-                            buttonContainer.innerHTML = "Episodio " + numberEp;
-                            buttonContainer.style.padding = "1rem";
-                            buttonContainer.style.backgroundImage = "";
-                            buttonContainer.style.cursor = "pointer";
-                            if (isLastEpisode == true) {
-                                buttonContainer.className =
-                                    "dropdown-item lastepisode loaded";
-                            } else {
-                                buttonContainer.className = "dropdown-item loaded";
-                            }
+                            resumeButton.innerHTML = "Episodio " + episodeNumber;
+                            resumeButton.style.padding = "1rem";
+                            resumeButton.style.backgroundImage = "";
+                            resumeButton.style.cursor = "pointer";
+                            resumeButton.className = "dropdown-item loaded";
 
                             //Returns alert button
                             var hideAlert = document.getElementById("alert");
