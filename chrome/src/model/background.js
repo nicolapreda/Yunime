@@ -1,6 +1,6 @@
 "use strict";
 
-var extVers = "1.1";
+var extVers = "1.2";
 
 //Open NativeConnect download when extension is installed
 chrome.runtime.onInstalled.addListener(function(object) {
@@ -35,7 +35,7 @@ chrome.runtime.onMessage.addListener(function(result, sender) {
 
         port.onMessage.addListener((res) => {
             console.log(res)
-            if (res.vers != "1.1") {
+            if (res.vers != extVers) {
                 if (window.confirm("E' disponibile un nuovo aggiornamento!\nScaricalo cliccando 'Ok'")) {
                     window.open('https://nicolapreda.me/yunime/#download', '_blank');
                 };

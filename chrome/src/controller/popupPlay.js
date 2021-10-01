@@ -1,5 +1,5 @@
 //Check the version of the extension
-const checkVers = "1.1";
+const checkVers = "1.2";
 
 //Sleep function
 function sleep(ms) {
