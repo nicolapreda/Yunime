@@ -1,0 +1,16 @@
+{
+    "name": "Yunime",
+    "version": "1.3",
+    "description": "Il tuo prossimo sito streaming anime... Non è un sito streaming!",
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "permissions": [
+        "storage"
+    ],
+    "browser_action": {
+        "default_popup": "popup.html"
+    },
+
+    "manifest_version": 2
+}
